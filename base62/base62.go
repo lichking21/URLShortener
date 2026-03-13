@@ -2,7 +2,6 @@ package base62
 
 import (
 	"errors"
-	"math"
 	"strings"
 )
 
@@ -12,6 +11,10 @@ const (
 )
 
 func Encode(num uint64) string {
+
+	if num == 0 {
+		return "0"
+	}
 
 	encoded := ""
 
@@ -28,16 +31,15 @@ func Decode(encoded string) (uint64, error) {
 
 	var res uint64
 
-	for index, char := range encoded {
+	for _, char := range encoded {
 
-		pow := len(encoded) - (index + 1)
 		pos := strings.IndexRune(characterSet, char)
 
 		if pos == -1 {
 			return 0, errors.New("(ERR) >> Invalid character: " + string(char))
 		}
 
-		res += uint64(pos) * uint64(math.Pow(float64(base), float64(pow)))
+		res = res*base + uint64(pos)
 	}
 
 	return res, nil
