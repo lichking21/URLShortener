@@ -18,6 +18,17 @@ services:
       volumes:
         - redis_data:/data
 
+  app:
+      build: .
+      ports:
+        - "8080:8080"
+      depends_on:
+        - db
+        - redis
+      environment:
+        - REDIS_URL=redis://redis:6379/0
+        - DB_URL=postgres://legend:9874@db:5432/urlshortener?sslmode=disable
+
 volumes:
   postgres_data:
   redis_data:
