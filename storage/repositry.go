@@ -24,7 +24,11 @@ func PrintUrl(url URL) {
 
 func (repo *PostgresRepo) AddOrigUrl(ctx context.Context, url string) (uint64, error) {
 
-	sql := `INSERT INTO urls (original_url, short_code) VALUES ($1, '') RETURNING id`
+	sql := `INSERT INTO urls (original_url, short_code) 
+			VALUES ($1, '') 
+			ON CONFLICT (original_url)
+			DO UPDATE SET original_url = EXCLUDED.original_url
+			RETURNING id`
 
 	var id uint64
 
