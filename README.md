@@ -19,6 +19,9 @@ A high-performance, lightweight URL shortener service (similar to bit.ly) built 
 * **Routing**: Standard Go `net/http` ServeMux (Go 1.22+ features)
 
 ## Quick Start
+`curl -X POST http://localhost:8080/api/shorten \
+     -H "Content-Type: application/json" \
+     -d '{"url": "https://go.dev/doc/"}'`
 
 ### Prerequisites
 * [Go](https://golang.org/doc/install) (if running locally without containers)
